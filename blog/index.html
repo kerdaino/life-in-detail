@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description"
+        content="Life in Detail Podcast Blog - Real stories, issues, and solutions posted weekly." />
+    <title>Life in Detail Blog</title>
+    <link rel="stylesheet" href="/css/main.css" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon_io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon_io/favicon-16x16.png">
+    <link rel="manifest" href="/favicon_io/site.webmanifest">
+
+    <script src="https://kit.fontawesome.com/85eceaceac.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <!-- Fixed Header -->
+    <header class="header" role="banner">
+        <nav class="navbar" aria-label="Main navigation">
+            <div class="logo"><a href="../index.html"><img src="/media/logo.jpeg" alt="Life In Detail Podcast Logo"></a>
+            </div>
+            <button id="menu-toggle" class="hamburger" aria-label="Open menu" aria-expanded="false"
+                aria-controls="side-menu">☰</button>
+            <ul class="nav-links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="#">Episodes</a></li>
+                <li><a href="blog.html" aria-current="page">Blog</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Side Menu -->
+    <aside id="side-menu" class="side-menu" role="navigation" aria-hidden="true">
+        <ul>
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="#">Episodes</a></li>
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </aside>
+
+    <!-- Blog Section -->
+    <main style="margin-top: 120px; padding: 2rem;">
+        <section aria-labelledby="blog-title">
+            <h2 id="blog-title">From the Community</h2>
+            <p>Real questions anonymously submitted. Real answers from Mirabel.</p>
+
+            <!-- Blog articles loaded from CMS -->
+            <div id="blog-posts" class="blog-grid">
+                <!-- These articles will be injected dynamically by headless CMS (e.g., Contentful, Strapi, Sanity) -->
+                <article class="blog-post" role="article">
+                    <h3>Dealing with Rejection</h3>
+                    <p class="date">June 6, 2025</p>
+                    <p class="excerpt">"I feel like no one understands me. I've been trying to get through to my friends
+                        but..."</p>
+                    <a href="#" class="read-more">Read more</a>
+                </article>
+
+                <article class="blog-post" role="article">
+                    <h3>Finding Hope in Hard Times</h3>
+                    <p class="date">May 30, 2025</p>
+                    <p class="excerpt">How do you stay hopeful when things just keep going wrong? Here's how I learned
+                        to...</p>
+                    <a href="#" class="read-more">Read more</a>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <!-- Contact Form -->
+    <section id="contact" class="contact" aria-labelledby="contact-title">
+        <h2 id="contact-title">Partner or Sponsor Us</h2>
+        <form action="https://formsubmit.co/5615fff53db8c69217c883b045e32513" method="POST" aria-label="Contact form">
+            <input type="text" name="_honey" style="display:none">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" placeholder="Your Name" required />
+
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="Your Email" required />
+
+            <label for="message">Message</label>
+            <textarea id="message" name="message" placeholder="Your message" required></textarea>
+
+            <button type="submit">Send</button>
+        </form>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" role="contentinfo">
+        <div class="social-links">
+            <a href="https://www.instagram.com/lifeindetailpodcast?igsh=ZmtjZDhsZWt2NW8x&utm_source=qr" target="_blank"
+                aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://www.facebook.com/share/1Ywuw7rbEm/?mibextid=wwXIfr" target="_blank"
+                aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
+            <a href="https://x.com/lifeindetailpod?s=21" target="_blank" aria-label="X"><i
+                    class="fa-brands fa-x-twitter"></i></a>
+            <a href="https://www.tiktok.com/@lifeindetailpodcast?_t=ZM-8wzRJAxI7z4&_r=1" target="_blank"
+                aria-label="Tiktok"><i class="fa-brands fa-tiktok"></i></a>
+        </div>
+        <p><a href="https://kerdaino.github.io/portfolio" target="_blank">&copy; 2025 KD Global. All rights
+                reserved.</a></p>
+    </footer>
+
+    <script>
+        const menuToggle = document.getElementById('menu-toggle');
+        const sideMenu = document.getElementById('side-menu');
+
+        function closeMenu() {
+            sideMenu.setAttribute('aria-hidden', 'true');
+            menuToggle.setAttribute('aria-expanded', 'false');
+            sideMenu.classList.remove('open');
+        }
+
+        menuToggle.addEventListener('click', () => {
+            const isOpen = sideMenu.getAttribute('aria-hidden') === 'false';
+            if (isOpen) {
+                closeMenu();
+            } else {
+                sideMenu.setAttribute('aria-hidden', 'false');
+                menuToggle.setAttribute('aria-expanded', 'true');
+                sideMenu.classList.add('open');
+            }
+        });
+
+        document.addEventListener('scroll', closeMenu);
+        document.addEventListener('click', (e) => {
+            if (!sideMenu.contains(e.target) && e.target !== menuToggle) {
+                closeMenu();
+            }
+        });
+    </script>
+</body>
+
+</html>
