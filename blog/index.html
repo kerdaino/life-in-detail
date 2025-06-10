@@ -226,28 +226,41 @@ client.fetch(`*[_type == "comment" && post._ref == $postId] | order(date asc)`, 
 
   // Submit handler
   const form = document.getElementById("comment-form");
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const name = document.getElementById("comment-name").value.trim();
-    const message = document.getElementById("comment-message").value.trim();
-    if (!name || !message) return;
 
-    try {
-      await client.create({
-        _type: "comment",
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const name = document.getElementById("comment-name").value.trim();
+  const message = document.getElementById("comment-message").value.trim();
+  if (!name || !message) return;
+
+  try {
+    const response = await fetch("/.netlify/functions/post-comment", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
         name,
         message,
-        post: { _type: "reference", _ref: postId },
-        date: new Date().toISOString()
-      });
+        postId
+      })
+    });
+
+    const result = await response.json();
+
+    if (response.ok) {
       alert("Comment submitted!");
-      location.reload(); // Reload to show new comment
-    } catch (err) {
-      console.error("Comment error:", err);
+      location.reload();
+    } else {
+      console.error("Server error:", result.error);
       alert("Failed to post comment.");
     }
-  });
+  } catch (err) {
+    console.error("Comment error:", err);
+    alert("Failed to post comment.");
+  }
 });
+
 </script>
 
 
