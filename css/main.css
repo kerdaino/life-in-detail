@@ -187,6 +187,37 @@ button:hover {
   text-decoration: none;
 }
 
+/* Blog style */
+.full-content {
+  margin-top: 1rem;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+.back-link {
+  display: inline-block;
+  margin-top: 2rem;
+  color: #0070f3;
+  text-decoration: underline;
+}
+
+.comment {
+  border-top: 1px solid #ddd;
+  margin-top: 1em;
+  padding-top: 0.5em;
+}
+#comment-form {
+  margin-top: 2em;
+}
+#comment-form input, #comment-form textarea {
+  width: 100%;
+  margin-bottom: 0.5em;
+  padding: 0.5em;
+}
+#comment-form button {
+  padding: 0.5em 1em;
+}
+
+
 @media (max-width: 768px) {
   .nav-links {
     display: none;

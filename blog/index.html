@@ -14,6 +14,8 @@
     <link rel="manifest" href="/favicon_io/site.webmanifest">
 
     <script src="https://kit.fontawesome.com/85eceaceac.js" crossorigin="anonymous"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/@sanity/client@5.18.0/dist/sanityClient.browser.min.js"></script> -->
+
 </head>
 
 <body>
@@ -27,7 +29,7 @@
             <ul class="nav-links">
                 <li><a href="../index.html">Home</a></li>
                 <li><a href="#">Episodes</a></li>
-                <li><a href="blog.html" aria-current="page">Blog</a></li>
+                <li><a href="/blog/index.html" aria-current="page">Blog</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
         </nav>
@@ -38,7 +40,7 @@
         <ul>
             <li><a href="../index.html">Home</a></li>
             <li><a href="#">Episodes</a></li>
-            <li><a href="blog.html">Blog</a></li>
+            <li><a href="/blog/index.html">Blog</a></li>
             <li><a href="#contact">Contact</a></li>
         </ul>
     </aside>
@@ -47,25 +49,25 @@
     <main style="margin-top: 120px; padding: 2rem;">
         <section aria-labelledby="blog-title">
             <h2 id="blog-title">From the Community</h2>
-            <p>Real questions anonymously submitted. Real answers from Mirabel.</p>
+            <p>Real questions anonymously submitted and Real answers.</p>
 
             <!-- Blog articles loaded from CMS -->
             <div id="blog-posts" class="blog-grid">
-                <!-- These articles will be injected dynamically by headless CMS (e.g., Contentful, Strapi, Sanity) -->
+                <!-- These articles will be injected dynamically by headless CMS (Sanity) -->
                 <article class="blog-post" role="article">
-                    <h3>Dealing with Rejection</h3>
+                    <!-- <h3>Dealing with Rejection</h3>
                     <p class="date">June 6, 2025</p>
                     <p class="excerpt">"I feel like no one understands me. I've been trying to get through to my friends
                         but..."</p>
-                    <a href="#" class="read-more">Read more</a>
+                    <a href="#" class="read-more">Read more</a> -->
                 </article>
 
                 <article class="blog-post" role="article">
-                    <h3>Finding Hope in Hard Times</h3>
+                    <!-- <h3>Finding Hope in Hard Times</h3>
                     <p class="date">May 30, 2025</p>
                     <p class="excerpt">How do you stay hopeful when things just keep going wrong? Here's how I learned
                         to...</p>
-                    <a href="#" class="read-more">Read more</a>
+                    <a href="#" class="read-more">Read more</a> -->
                 </article>
             </div>
         </section>
@@ -133,6 +135,123 @@
             }
         });
     </script>
+
+
+    <script type="module">
+  import { createClient } from "https://esm.sh/@sanity/client";
+
+  const client = createClient({
+    projectId: "1pmeroly",
+    dataset: "production",
+    apiVersion: "2023-01-01",
+    useCdn: true
+  });
+
+  const container = document.getElementById("blog-posts");
+  const params = new URLSearchParams(window.location.search);
+  const postId = params.get('id');
+
+  if (postId) {
+    // Fetch and display full post
+    client.fetch(`*[_id == $id][0]`, { id: postId }).then(post => {
+      if (!post) {
+        container.innerHTML = "<p>Post not found.</p>";
+        return;
+      }
+
+      const html = `
+        <article class="blog-post" role="article">
+          <h2>${post.title || post.question}</h2>
+          <p class="date">${new Date(post.date).toDateString()}</p>
+          <div class="full-content">
+            <p>${post.content || post.answer}</p>
+          </div>
+          <a href="index.html" class="back-link">← Back to all posts</a>
+        </article>
+      `;
+      container.innerHTML = html;
+    }).catch(error => {
+      console.error("Error loading post:", error);
+      container.innerHTML = "<p>Something went wrong. Please try again later.</p>";
+    });
+
+  } else {
+    // Fetch and list posts
+    client.fetch('*[_type == "qaPost" || _type == "userBlog"] | order(date desc)[0...10]')
+      .then(posts => {
+        container.innerHTML = "";
+        console.log("Fetched posts:", posts);
+        posts.forEach(post => {
+          const html = `
+            <article class="blog-post" role="article">
+              <h3>${post.title || post.question}</h3>
+              <p class="date">${new Date(post.date).toDateString()}</p>
+              <p class="excerpt">${(post.content || post.answer).slice(0, 100)}...</p>
+              <a href="index.html?id=${post._id}" class="read-more">Read more</a>
+            </article>
+          `;
+          container.insertAdjacentHTML("beforeend", html);
+        });
+      })
+      .catch(error => {
+  console.error("Error loading posts:", error);
+  container.innerHTML = `<p style="color:red;">Sanity Error: ${error.message}</p>`;
+});
+  }
+
+  // After rendering the full post...
+
+// Fetch and display comments
+client.fetch(`*[_type == "comment" && post._ref == $postId] | order(date asc)`, { postId }).then(comments => {
+  const commentSection = document.createElement('section');
+  commentSection.innerHTML = `
+    <h3>Comments</h3>
+    <div id="comments-list">
+      ${comments.map(c => `
+        <div class="comment">
+          <p><strong>${c.name}</strong> <em>${new Date(c.date).toLocaleDateString()}</em></p>
+          <p>${c.message}</p>
+        </div>
+      `).join('')}
+    </div>
+    <form id="comment-form">
+      <h4>Leave a Comment</h4>
+      <input type="text" id="comment-name" placeholder="Your name" required />
+      <textarea id="comment-message" placeholder="Your comment" required></textarea>
+      <button type="submit">Post Comment</button>
+    </form>
+  `;
+
+  container.appendChild(commentSection);
+
+  // Submit handler
+  const form = document.getElementById("comment-form");
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const name = document.getElementById("comment-name").value.trim();
+    const message = document.getElementById("comment-message").value.trim();
+    if (!name || !message) return;
+
+    try {
+      await client.create({
+        _type: "comment",
+        name,
+        message,
+        post: { _type: "reference", _ref: postId },
+        date: new Date().toISOString()
+      });
+      alert("Comment submitted!");
+      location.reload(); // Reload to show new comment
+    } catch (err) {
+      console.error("Comment error:", err);
+      alert("Failed to post comment.");
+    }
+  });
+});
+</script>
+
+
+
 </body>
 
 </html>
