@@ -5,7 +5,7 @@ const client = sanityClient({
   projectId: '1pmeroly',
   dataset: 'production',
   apiVersion: '2023-01-01',
-  token: process.env.SANITY_TOKEN, // Use env var for private token
+  token: process.env.SANITY_TOKEN,
   useCdn: false
 });
 
@@ -17,12 +17,20 @@ exports.handler = async function () {
 
     return {
       statusCode: 200,
-      body: JSON.stringify(posts)
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(Array.isArray(posts) ? posts : [])
     };
   } catch (error) {
     console.error("Sanity fetch error:", error.message);
     return {
       statusCode: 500,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify({ error: "Failed to fetch posts." })
     };
   }
