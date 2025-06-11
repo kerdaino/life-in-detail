@@ -176,26 +176,27 @@
 
     } else {
       // Fetch and list posts
-      client.fetch('*[_type == "qaPost" || _type == "userBlog"] | order(date desc)[0...10]')
+      fetch('/.netlify/functions/get-posts')
+        .then(res => res.json())
         .then(posts => {
           container.innerHTML = "";
-          console.log("Fetched posts:", posts);
           posts.forEach(post => {
             const html = `
-            <article class="blog-post" role="article">
-              <h3>${post.title || post.question}</h3>
-              <p class="date">${new Date(post.date).toDateString()}</p>
-              <p class="excerpt">${(post.content || post.answer).slice(0, 100)}...</p>
-              <a href="index.html?id=${post._id}" class="read-more">Read more</a>
-            </article>
-          `;
+        <article class="blog-post" role="article">
+          <h3>${post.title || post.question}</h3>
+          <p class="date">${new Date(post.date).toDateString()}</p>
+          <p class="excerpt">${(post.content || post.answer).slice(0, 100)}...</p>
+          <a href="index.html?id=${post._id}" class="read-more">Read more</a>
+        </article>
+      `;
             container.insertAdjacentHTML("beforeend", html);
           });
         })
         .catch(error => {
           console.error("Error loading posts:", error);
-          container.innerHTML = `<p style="color:red;">Sanity Error: ${error.message}</p>`;
+          container.innerHTML = `<p style="color:red;">Unable to load posts right now.</p>`;
         });
+
     }
 
     // After rendering the full post...
@@ -258,7 +259,7 @@
           console.error("Comment error:", err);
           alert("Failed to post comment.");
         }
-            });
+      });
     }); // closes the fetch for comments
   </script>
 
