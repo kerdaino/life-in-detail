@@ -18,6 +18,7 @@
   "homepage": "https://github.com/kerdaino/life-in-detail#readme",
   "description": "",
   "dependencies": {
+    "@sanity/client": "^7.5.0",
     "node-fetch": "^3.3.2"
   }
 }
