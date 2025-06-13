@@ -137,115 +137,100 @@
 
 
   <script type="module">
-    import { createClient } from "https://esm.sh/@sanity/client";
+  const container = document.getElementById("blog-posts");
+  const params = new URLSearchParams(window.location.search);
+  const postId = params.get('id');
 
-    const client = createClient({
-      projectId: "1pmeroly",
-      dataset: "production",
-      apiVersion: "2023-01-01",
-      useCdn: true
-    });
-
-    const container = document.getElementById("blog-posts");
-    const params = new URLSearchParams(window.location.search);
-    const postId = params.get('id');
-    
-    if (postId) {
-      // Fetch and display full post
-      client.fetch(`*[_id == $id][0]`, { id: postId }).then(post => {
-        if (!post) {
-          container.innerHTML = "<p>Post not found.</p>";
+  if (postId) {
+    // 🚀 Load single full post
+    container.innerHTML = `<p style="color:#ccc;">Loading post...</p>`;
+    fetch(`/.netlify/functions/get-post-by-id?id=${postId}`)
+      .then(res => res.json())
+      .then(post => {
+        if (!post || post.error) {
+          container.innerHTML = `<p style="color:red;">Post not found.</p>`;
           return;
         }
 
         const html = `
-        <article class="blog-post" role="article">
-          <h2>${post.title || post.question}</h2>
-          <p class="date">${new Date(post.date).toDateString()}</p>
-          <div class="full-content">
-            <p>${post.content || post.answer}</p>
-          </div>
-          <a href="index.html" class="back-link">← Back to all posts</a>
-        </article>
-      `;
+          <article class="blog-post" role="article">
+            <h2>${post.title || post.question}</h2>
+            <p class="date">${new Date(post.date).toDateString()}</p>
+            <div class="full-content">
+              <p>${post.content || post.answer}</p>
+            </div>
+            <a href="/blog/index.html" class="back-link">← Back to all posts</a>
+          </article>
+        `;
         container.innerHTML = html;
-      }).catch(error => {
+
+        // ✅ Load comments after full post
+        loadComments(postId);
+      })
+      .catch(error => {
         console.error("Error loading post:", error);
-        container.innerHTML = "<p>Something went wrong. Please try again later.</p>";
+        container.innerHTML = `<p style="color:red;">Something went wrong. Please try again.</p>`;
       });
 
-    } else {
-      container.innerHTML = `<p style="color: #ccc; font-style: italic;">Loading blog posts...</p>`;
-      // Fetch and list posts
-      fetch('/.netlify/functions/get-posts')
-        fetch('/.netlify/functions/get-posts')
-  .then(async res => {
-    if (!res.ok) {
-      const text = await res.text(); // try to read raw text
-      throw new Error(text);
-    }
-    return res.json(); // safe now
-  })
-  .then(posts => {
-    container.innerHTML = "";
-    posts.forEach(post => {
-      const html = `
-        <article class="blog-post" role="article">
-          <h3>${post.title || post.question}</h3>
-          <p class="date">${new Date(post.date).toDateString()}</p>
-          <p class="excerpt">${(post.content || post.answer).slice(0, 100)}...</p>
-          <a href="index.html?id=${post._id}" class="read-more">Read more</a>
-        </article>
-      `;
-      container.insertAdjacentHTML("beforeend", html);
-    });
-  })
-  .catch(error => {
-    console.error("Error loading posts:", error);
-    container.innerHTML = `
-      <p style="color:red;">
-        ❌ Unable to load posts. Please check your internet or try again later.
-      </p>
-      <pre style="color:#ffcccc; font-size:0.9rem;">${error.message}</pre>
-    `;
-  });
+  } else {
+    // 📋 Load list of posts (homepage of blog)
+    container.innerHTML = `<p style="color:#ccc;">Loading posts...</p>`;
+    fetch('/.netlify/functions/get-posts')
+      .then(res => res.json())
+      .then(posts => {
+        container.innerHTML = "";
+        posts.forEach(post => {
+          const html = `
+            <article class="blog-post" role="article">
+              <h3>${post.title || post.question}</h3>
+              <p class="date">${new Date(post.date).toDateString()}</p>
+              <p class="excerpt">${(post.content || post.answer).slice(0, 100)}...</p>
+              <a href="index.html?id=${post._id}" class="read-more">Read more</a>
+            </article>
+          `;
+          container.insertAdjacentHTML("beforeend", html);
+        });
+      })
+      .catch(error => {
+        console.error("Error loading posts:", error);
+        container.innerHTML = `<p style="color:red;">Unable to load posts.</p>`;
+      });
+  }
 
-
-
-    }
-
-    // After rendering the full post...
-
-    // Fetch and display comments
-    client.fetch(`*[_type == "comment" && post._ref == $postId] | order(date asc)`, { postId }).then(comments => {
+  // ✅ Define the loadComments function
+  function loadComments(postId) {
+     fetch(`/.netlify/functions/get-comments?postId=${postId}`)
+    .then(res => res.json())
+    .then(comments => {
       const commentSection = document.createElement('section');
       commentSection.innerHTML = `
-    <h3>Comments</h3>
-    <div id="comments-list">
-      ${comments.map(c => `
-        <div class="comment">
-          <p><strong>${c.name}</strong> <em>${new Date(c.date).toLocaleDateString()}</em></p>
-          <p>${c.message}</p>
+        <h3>Comments</h3>
+        <div id="comments-list">
+          ${comments.map(c => `
+            <div class="comment">
+              <p><strong>${c.name}</strong> <em>${new Date(c.date).toLocaleDateString()}</em></p>
+              <p>${c.message}</p>
+            </div>
+          `).join('')}
         </div>
-      `).join('')}
-    </div>
-    <form id="comment-form">
-      <h4>Leave a Comment</h4>
-      <input type="text" id="comment-name" placeholder="Your name" required />
-      <textarea id="comment-message" placeholder="Your comment" required></textarea>
-      <button type="submit">Post Comment</button>
-    </form>
-  `;
+        <form id="comment-form">
+          <h4>Leave a Comment</h4>
+          <input type="text" id="comment-name" placeholder="Your name" required />
+          <textarea id="comment-message" placeholder="Your comment" required></textarea>
+          <button type="submit">Post Comment</button>
+        </form>
+      `;
+      document.getElementById("blog-posts").appendChild(commentSection);
 
-      container.appendChild(commentSection);
-
-      // Submit handler
       const form = document.getElementById("comment-form");
-
       form.addEventListener("submit", async (e) => {
         e.preventDefault();
         const name = document.getElementById("comment-name").value.trim();
         const message = document.getElementById("comment-message").value.trim();
+
+        // ✅ Debug log
+        console.log("Submitting comment:", { name, message, postId });
+
         if (!name || !message) return;
 
         try {
@@ -254,11 +239,7 @@
             headers: {
               "Content-Type": "application/json"
             },
-            body: JSON.stringify({
-              name,
-              message,
-              postId
-            })
+            body: JSON.stringify({ name, message, postId })
           });
 
           const result = await response.json();
@@ -268,15 +249,24 @@
             location.reload();
           } else {
             console.error("Server error:", result.error);
-            alert("Failed to post comment.");
+            alert(`Failed to post comment:\n${result.error}`);
           }
         } catch (err) {
           console.error("Comment error:", err);
-          alert("Failed to post comment.");
+          alert(`❌ Error: ${err.message}`);
         }
       });
-    }); // closes the fetch for comments
-  </script>
+    })
+    .catch(err => {
+      console.error("Comment fetch error:", err);
+      const errorEl = document.createElement("p");
+      errorEl.style.color = "red";
+      errorEl.textContent = "❌ Unable to load comments.";
+      document.getElementById("blog-posts").appendChild(errorEl);
+    });
+  }
+</script>
+
 
 
 

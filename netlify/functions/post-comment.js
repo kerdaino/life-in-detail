@@ -1,6 +1,4 @@
-const fetch = require("node-fetch");
-
-require('dotenv').config();
+require("dotenv").config();
 
 exports.handler = async (event) => {
   if (event.httpMethod !== "POST") {
@@ -11,7 +9,8 @@ exports.handler = async (event) => {
   }
 
   try {
-    const { name, message, postId } = JSON.parse(event.body);
+    const data = JSON.parse(event.body);
+    const { name, message, postId } = data;
 
     if (!name || !message || !postId) {
       return {
@@ -21,7 +20,8 @@ exports.handler = async (event) => {
     }
 
     const sanityToken = process.env.SANITY_TOKEN;
-    const sanityUrl = "https://1pmeroly.api.sanity.io/v2023-01-01/data/mutate/production";
+    const sanityUrl =
+      "https://1pmeroly.api.sanity.io/v2023-01-01/data/mutate/production";
 
     const response = await fetch(sanityUrl, {
       method: "POST",
@@ -49,19 +49,19 @@ exports.handler = async (event) => {
 
     const result = await response.json();
 
-    if (response.ok) {
+    if (!response.ok) {
       return {
-        statusCode: 200,
-        body: JSON.stringify({ success: true, result }),
+        statusCode: 500,
+        body: JSON.stringify({
+          error: result.message || "Mutation failed",
+        }),
       };
-    } else {
-      console.error("Sanity mutation failed:", result);
-return {
-  statusCode: 500,
-  body: JSON.stringify({ error: result.message || "Failed to create comment." }),
-};
-
     }
+
+    return {
+      statusCode: 200,
+      body: JSON.stringify({ success: true, result }),
+    };
   } catch (error) {
     return {
       statusCode: 500,
