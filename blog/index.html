@@ -149,7 +149,7 @@
     const container = document.getElementById("blog-posts");
     const params = new URLSearchParams(window.location.search);
     const postId = params.get('id');
-
+    
     if (postId) {
       // Fetch and display full post
       client.fetch(`*[_id == $id][0]`, { id: postId }).then(post => {
@@ -175,13 +175,21 @@
       });
 
     } else {
+      container.innerHTML = `<p style="color: #ccc; font-style: italic;">Loading blog posts...</p>`;
       // Fetch and list posts
       fetch('/.netlify/functions/get-posts')
-        .then(res => res.json())
-        .then(posts => {
-          container.innerHTML = "";
-          posts.forEach(post => {
-            const html = `
+        fetch('/.netlify/functions/get-posts')
+  .then(async res => {
+    if (!res.ok) {
+      const text = await res.text(); // try to read raw text
+      throw new Error(text);
+    }
+    return res.json(); // safe now
+  })
+  .then(posts => {
+    container.innerHTML = "";
+    posts.forEach(post => {
+      const html = `
         <article class="blog-post" role="article">
           <h3>${post.title || post.question}</h3>
           <p class="date">${new Date(post.date).toDateString()}</p>
@@ -189,13 +197,20 @@
           <a href="index.html?id=${post._id}" class="read-more">Read more</a>
         </article>
       `;
-            container.insertAdjacentHTML("beforeend", html);
-          });
-        })
-        .catch(error => {
-          console.error("Error loading posts:", error);
-          container.innerHTML = `<p style="color:red;">Unable to load posts right now.</p>`;
-        });
+      container.insertAdjacentHTML("beforeend", html);
+    });
+  })
+  .catch(error => {
+    console.error("Error loading posts:", error);
+    container.innerHTML = `
+      <p style="color:red;">
+        ❌ Unable to load posts. Please check your internet or try again later.
+      </p>
+      <pre style="color:#ffcccc; font-size:0.9rem;">${error.message}</pre>
+    `;
+  });
+
+
 
     }
 

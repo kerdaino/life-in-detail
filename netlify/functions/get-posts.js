@@ -1,7 +1,8 @@
-// netlify/functions/get-posts.js
-const sanityClient = require('@sanity/client');
+require('dotenv').config();
 
-const client = sanityClient({
+const sanity = require('@sanity/client');
+
+const client = sanity.createClient({
   projectId: '1pmeroly',
   dataset: 'production',
   apiVersion: '2023-01-01',
@@ -21,17 +22,17 @@ exports.handler = async function () {
         'Access-Control-Allow-Origin': '*',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(Array.isArray(posts) ? posts : [])
+      body: JSON.stringify(posts)
     };
   } catch (error) {
-    console.error("Sanity fetch error:", error.message);
+    console.error("Sanity fetch error:", error.message, error.stack);
     return {
       statusCode: 500,
       headers: {
         'Access-Control-Allow-Origin': '*',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ error: "Failed to fetch posts." })
+      body: JSON.stringify({ error: error.message })
     };
   }
 };

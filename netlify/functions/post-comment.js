@@ -1,5 +1,7 @@
 const fetch = require("node-fetch");
 
+require('dotenv').config();
+
 exports.handler = async (event) => {
   if (event.httpMethod !== "POST") {
     return {
@@ -53,10 +55,12 @@ exports.handler = async (event) => {
         body: JSON.stringify({ success: true, result }),
       };
     } else {
-      return {
-        statusCode: 500,
-        body: JSON.stringify({ error: result }),
-      };
+      console.error("Sanity mutation failed:", result);
+return {
+  statusCode: 500,
+  body: JSON.stringify({ error: result.message || "Failed to create comment." }),
+};
+
     }
   } catch (error) {
     return {
