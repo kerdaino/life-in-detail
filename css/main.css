@@ -1,13 +1,16 @@
-/* Accessibility-first, responsive external stylesheet */
-
+/* 🎨 Color and Font Variables */
 :root {
-  --primary-color: #e6cfe6; /* light pink from mic highlight */
-  --secondary-color: #0d0d0d; /* deep black background */
-  --accent-color: #9933cc; /* deep purple accent */
+  --primary-color: #e6cfe6;
+  /* Light pink from mic highlight */
+  --secondary-color: #0d0d0d;
+  /* Deep black background */
+  --accent-color: #9933cc;
+  /* Deep purple for accents */
   --text-color: #ffffff;
   --font-family: 'Arial', sans-serif;
 }
 
+/* 📄 Global Styles */
 body {
   margin: 0;
   font-family: var(--font-family);
@@ -15,6 +18,7 @@ body {
   color: var(--text-color);
 }
 
+/* 🔝 Header and Navigation */
 .header {
   position: fixed;
   top: 0;
@@ -29,10 +33,6 @@ body {
   width: 10%;
   border: solid 2px var(--accent-color);
   border-radius: 50%;
-}
-
-li a:hover {
-    color: var(--accent-color);
 }
 
 .navbar {
@@ -53,7 +53,12 @@ li a:hover {
   text-decoration: none;
 }
 
-/* Hamburger menu styles */
+/* 💫 Hover effect for nav links */
+li a:hover {
+  color: var(--accent-color);
+}
+
+/* 🍔 Hamburger Menu (Mobile) */
 .hamburger {
   font-size: 2rem;
   background: none;
@@ -65,6 +70,7 @@ li a:hover {
   display: none;
 }
 
+/* 📱 Side Menu (Mobile Drawer) */
 .side-menu {
   position: fixed;
   top: 70px;
@@ -75,7 +81,7 @@ li a:hover {
   transform: translateX(100%);
   transition: transform 0.3s ease-in-out;
   z-index: 999;
-  box-shadow: 2px 0 5px rgba(0,0,0,0.3);
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
   border-right: 1px solid var(--accent-color);
 }
 
@@ -95,6 +101,7 @@ li a:hover {
   padding: 0.5rem 0;
 }
 
+/* 🦸 Hero Section */
 .hero {
   margin-top: 100px;
   text-align: center;
@@ -108,14 +115,14 @@ li a:hover {
 .hero h1 {
   font-size: 2.5rem;
   color: var(--accent-color);
-  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000,
+    -1px 1px 0 #000, 1px 1px 0 #000;
 }
-
 
 .tagline {
   font-size: 1.25rem;
   color: var(--text-color);
-   line-height: 50px;
+  line-height: 50px;
 }
 
 .release {
@@ -123,12 +130,15 @@ li a:hover {
   font-weight: bold;
 }
 
-.contact, .anonymous {
+/* ✉️ Contact + Anonymous Drop Section */
+.contact,
+.anonymous {
   padding: 2rem;
   background-color: #1a1a1a;
   margin-top: 2rem;
 }
 
+/* Contact Form and Anonymous Link Styling */
 .contact form,
 .anonymous a {
   display: flex;
@@ -138,7 +148,9 @@ li a:hover {
   margin: 0 auto;
 }
 
-input, textarea, button {
+input,
+textarea,
+button {
   padding: 0.75rem;
   font-size: 1rem;
   border: 1px solid var(--accent-color);
@@ -152,28 +164,29 @@ button {
   transition: background 0.3s;
 }
 
-#contact h2{
-    text-align: center;
+#contact h2 {
+  text-align: center;
 }
 
 button:hover {
   background-color: #bf5fff;
 }
 
-#anonymous{
-    text-align: center;
+/* Anonymous Section Link */
+#anonymous {
+  text-align: center;
 }
 
-#anonymous a{
-    color: var(--accent-color);
-    text-decoration: none;
+#anonymous a {
+  color: var(--accent-color);
+  text-decoration: none;
 }
 
-
-#anonymous a:hover{
-    color: #bf5fff;
+#anonymous a:hover {
+  color: #bf5fff;
 }
 
+/* 🦶 Footer Section */
 .footer {
   text-align: center;
   padding: 2rem;
@@ -187,12 +200,13 @@ button:hover {
   text-decoration: none;
 }
 
-/* Blog style */
+/* 📝 Blog-Specific Styles */
 .full-content {
   margin-top: 1rem;
   font-size: 1rem;
   line-height: 1.6;
 }
+
 .back-link {
   display: inline-block;
   margin-top: 2rem;
@@ -200,24 +214,29 @@ button:hover {
   text-decoration: underline;
 }
 
+/* 💬 Comments Section */
 .comment {
   border-top: 1px solid #ddd;
   margin-top: 1em;
   padding-top: 0.5em;
 }
+
 #comment-form {
   margin-top: 2em;
 }
-#comment-form input, #comment-form textarea {
+
+#comment-form input,
+#comment-form textarea {
   width: 100%;
   margin-bottom: 0.5em;
   padding: 0.5em;
 }
+
 #comment-form button {
   padding: 0.5em 1em;
 }
 
-
+/* 📱 Responsive Design: Mobile-first adjustments */
 @media (max-width: 768px) {
   .nav-links {
     display: none;

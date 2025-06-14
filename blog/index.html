@@ -2,29 +2,68 @@
 <html lang="en">
 
 <head>
+  <!-- Required Meta Tags -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Life in Detail Podcast Blog - Real stories, issues, and solutions posted weekly." />
-  <title>Life in Detail Blog</title>
-  <link rel="stylesheet" href="/css/main.css" />
+
+  <!-- SEO Meta Tags -->
+  <meta name="title" content="Life In Detail Podcast" />
+  <meta name="description"
+    content="Real stories, Real issues, Real solutions. Spirit-led podcast exploring faith, healing, identity, and purpose." />
+  <meta name="keywords"
+    content="Life in Detail, Podcast, Christian, Mirabel, Healing, Identity, Testimony, Faith, Relationship, Advice" />
+  <meta name="author" content="KD Global" />
+  <meta name="robots" content="index, follow" />
+
+  <!-- Open Graph Meta Tags (for Facebook, LinkedIn, etc.) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://lifeindetail.netlify.app/" />
+  <meta property="og:title" content="Life In Detail Podcast" />
+  <meta property="og:description"
+    content="Real stories, Real issues, Real solutions. Spirit-led podcast exploring faith, healing, identity, and purpose." />
+  <meta property="og:image" content="https://lifeindetail.netlify.app/media/logo.jpeg" />
+
+  <!-- Twitter Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content="https://lifeindetail.netlify.app/" />
+  <meta name="twitter:title" content="Life In Detail Podcast" />
+  <meta name="twitter:description"
+    content="Real stories, Real issues, Real solutions. Spirit-led podcast exploring faith, healing, identity, and purpose." />
+  <meta name="twitter:image" content="https://lifeindetail.netlify.app/media/logo.jpeg" />
+
+  <!-- Title Tag -->
+  <title>Life In Detail Podcast</title>
+
+  <!-- Favicon and App Icons -->
   <link rel="apple-touch-icon" sizes="180x180" href="/favicon_io/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon_io/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon_io/favicon-16x16.png">
   <link rel="manifest" href="/favicon_io/site.webmanifest">
 
+  <!-- CSS File -->
+  <link rel="stylesheet" href="/css/main.css" />
+
+  <!-- Font Awesome for Social Icons -->
   <script src="https://kit.fontawesome.com/85eceaceac.js" crossorigin="anonymous"></script>
-  <!-- <script src="https://cdn.jsdelivr.net/npm/@sanity/client@5.18.0/dist/sanityClient.browser.min.js"></script> -->
+
 
 </head>
 
 <body>
-  <!-- Fixed Header -->
+  <!-- 🔝 Fixed Header with Navigation -->
   <header class="header" role="banner">
     <nav class="navbar" aria-label="Main navigation">
-      <div class="logo"><a href="../index.html"><img src="/media/logo.jpeg" alt="Life In Detail Podcast Logo"></a>
+      <div class="logo">
+        <a href="../index.html">
+          <img src="/media/logo.jpeg" alt="Life In Detail Podcast Logo">
+        </a>
       </div>
+
+      <!-- 🍔 Mobile menu button -->
       <button id="menu-toggle" class="hamburger" aria-label="Open menu" aria-expanded="false"
         aria-controls="side-menu">☰</button>
+
+      <!-- 🔗 Primary navigation links -->
       <ul class="nav-links">
         <li><a href="../index.html">Home</a></li>
         <li><a href="#">Episodes</a></li>
@@ -34,7 +73,7 @@
     </nav>
   </header>
 
-  <!-- Side Menu -->
+  <!-- 📱 Slide-out Side Menu for mobile -->
   <aside id="side-menu" class="side-menu" role="navigation" aria-hidden="true">
     <ul>
       <li><a href="../index.html">Home</a></li>
@@ -44,53 +83,42 @@
     </ul>
   </aside>
 
-  <!-- Blog Section -->
+  <!-- 📝 Blog Section: dynamically filled by JavaScript -->
   <main style="margin-top: 120px; padding: 2rem;">
     <section aria-labelledby="blog-title">
       <h2 id="blog-title">From the Community</h2>
       <p>Real questions anonymously submitted and Real answers.</p>
 
-      <!-- Blog articles loaded from CMS -->
-      <div id="blog-posts" class="blog-grid">
-        <!-- These articles will be injected dynamically by headless CMS (Sanity) -->
-        <article class="blog-post" role="article">
-          <!-- <h3>Dealing with Rejection</h3>
-                    <p class="date">June 6, 2025</p>
-                    <p class="excerpt">"I feel like no one understands me. I've been trying to get through to my friends
-                        but..."</p>
-                    <a href="#" class="read-more">Read more</a> -->
-        </article>
-
-        <article class="blog-post" role="article">
-          <!-- <h3>Finding Hope in Hard Times</h3>
-                    <p class="date">May 30, 2025</p>
-                    <p class="excerpt">How do you stay hopeful when things just keep going wrong? Here's how I learned
-                        to...</p>
-                    <a href="#" class="read-more">Read more</a> -->
-        </article>
-      </div>
+      <!-- 🚀 Blog posts from CMS will be injected here -->
+      <div id="blog-posts" class="blog-grid"></div>
     </section>
   </main>
 
-  <!-- Contact Form -->
+  <!-- 📬 Contact Form Section -->
   <section id="contact" class="contact" aria-labelledby="contact-title">
     <h2 id="contact-title">Partner or Sponsor Us</h2>
     <form action="https://formsubmit.co/5615fff53db8c69217c883b045e32513" method="POST" aria-label="Contact form">
+      <!-- 🛡️ Honeypot spam filter -->
       <input type="text" name="_honey" style="display:none">
+
+      <!-- 🧍 Name input -->
       <label for="name">Name</label>
       <input type="text" id="name" name="name" placeholder="Your Name" required />
 
+      <!-- 📧 Email input -->
       <label for="email">Email</label>
       <input type="email" id="email" name="email" placeholder="Your Email" required />
 
+      <!-- 🗒️ Message input -->
       <label for="message">Message</label>
       <textarea id="message" name="message" placeholder="Your message" required></textarea>
 
+      <!-- 🚀 Submit button -->
       <button type="submit">Send</button>
     </form>
   </section>
 
-  <!-- Footer -->
+  <!-- 🦶 Footer with Social Media Links -->
   <footer class="footer" role="contentinfo">
     <div class="social-links">
       <a href="https://www.instagram.com/lifeindetailpodcast?igsh=ZmtjZDhsZWt2NW8x&utm_source=qr" target="_blank"
@@ -102,10 +130,12 @@
       <a href="https://www.tiktok.com/@lifeindetailpodcast?_t=ZM-8wzRJAxI7z4&_r=1" target="_blank"
         aria-label="Tiktok"><i class="fa-brands fa-tiktok"></i></a>
     </div>
-    <p><a href="https://kerdaino.github.io/portfolio" target="_blank">&copy; 2025 KD Global. All rights
-        reserved.</a></p>
+    <p>
+      <a href="https://kerdaino.github.io/portfolio" target="_blank">&copy; 2025 KD Global. All rights reserved.</a>
+    </p>
   </footer>
 
+  <!-- 🧠 Script: Mobile Menu Functionality -->
   <script>
     const menuToggle = document.getElementById('menu-toggle');
     const sideMenu = document.getElementById('side-menu');
@@ -116,17 +146,17 @@
       sideMenu.classList.remove('open');
     }
 
+    // Toggle menu on button click
     menuToggle.addEventListener('click', () => {
       const isOpen = sideMenu.getAttribute('aria-hidden') === 'false';
-      if (isOpen) {
-        closeMenu();
-      } else {
-        sideMenu.setAttribute('aria-hidden', 'false');
-        menuToggle.setAttribute('aria-expanded', 'true');
-        sideMenu.classList.add('open');
-      }
+      isOpen ? closeMenu() : (
+        sideMenu.setAttribute('aria-hidden', 'false'),
+        menuToggle.setAttribute('aria-expanded', 'true'),
+        sideMenu.classList.add('open')
+      );
     });
 
+    // Close menu when user scrolls or clicks outside
     document.addEventListener('scroll', closeMenu);
     document.addEventListener('click', (e) => {
       if (!sideMenu.contains(e.target) && e.target !== menuToggle) {
@@ -135,141 +165,135 @@
     });
   </script>
 
-
+  <!-- 🔁 Script: Load blog posts and comments dynamically -->
   <script type="module">
-  const container = document.getElementById("blog-posts");
-  const params = new URLSearchParams(window.location.search);
-  const postId = params.get('id');
+    const container = document.getElementById("blog-posts");
+    const params = new URLSearchParams(window.location.search);
+    const postId = params.get('id');
 
-  if (postId) {
-    // 🚀 Load single full post
-    container.innerHTML = `<p style="color:#ccc;">Loading post...</p>`;
-    fetch(`/.netlify/functions/get-post-by-id?id=${postId}`)
-      .then(res => res.json())
-      .then(post => {
-        if (!post || post.error) {
-          container.innerHTML = `<p style="color:red;">Post not found.</p>`;
-          return;
-        }
+    if (postId) {
+      // 🔍 If post ID is in URL → fetch a single post
+      container.innerHTML = `<p style="color:#ccc;">Loading post...</p>`;
+      fetch(`/.netlify/functions/get-post-by-id?id=${postId}`)
+        .then(res => res.json())
+        .then(post => {
+          if (!post || post.error) {
+            container.innerHTML = `<p style="color:red;">Post not found.</p>`;
+            return;
+          }
 
-        const html = `
-          <article class="blog-post" role="article">
-            <h2>${post.title || post.question}</h2>
-            <p class="date">${new Date(post.date).toDateString()}</p>
-            <div class="full-content">
-              <p>${post.content || post.answer}</p>
-            </div>
-            <a href="/blog/index.html" class="back-link">← Back to all posts</a>
-          </article>
-        `;
-        container.innerHTML = html;
-
-        // ✅ Load comments after full post
-        loadComments(postId);
-      })
-      .catch(error => {
-        console.error("Error loading post:", error);
-        container.innerHTML = `<p style="color:red;">Something went wrong. Please try again.</p>`;
-      });
-
-  } else {
-    // 📋 Load list of posts (homepage of blog)
-    container.innerHTML = `<p style="color:#ccc;">Loading posts...</p>`;
-    fetch('/.netlify/functions/get-posts')
-      .then(res => res.json())
-      .then(posts => {
-        container.innerHTML = "";
-        posts.forEach(post => {
+          // ✅ Display full blog post
           const html = `
             <article class="blog-post" role="article">
-              <h3>${post.title || post.question}</h3>
+              <h2>${post.title || post.question}</h2>
               <p class="date">${new Date(post.date).toDateString()}</p>
-              <p class="excerpt">${(post.content || post.answer).slice(0, 100)}...</p>
-              <a href="index.html?id=${post._id}" class="read-more">Read more</a>
+              <div class="full-content">
+                <p>${post.content || post.answer}</p>
+              </div>
+              <a href="/blog/index.html" class="back-link">← Back to all posts</a>
             </article>
           `;
-          container.insertAdjacentHTML("beforeend", html);
+          container.innerHTML = html;
+
+          // 💬 Load comments for this post
+          loadComments(postId);
+        })
+        .catch(error => {
+          console.error("Error loading post:", error);
+          container.innerHTML = `<p style="color:red;">Something went wrong. Please try again.</p>`;
         });
-      })
-      .catch(error => {
-        console.error("Error loading posts:", error);
-        container.innerHTML = `<p style="color:red;">Unable to load posts.</p>`;
-      });
-  }
-
-  // ✅ Define the loadComments function
-  function loadComments(postId) {
-     fetch(`/.netlify/functions/get-comments?postId=${postId}`)
-    .then(res => res.json())
-    .then(comments => {
-      const commentSection = document.createElement('section');
-      commentSection.innerHTML = `
-        <h3>Comments</h3>
-        <div id="comments-list">
-          ${comments.map(c => `
-            <div class="comment">
-              <p><strong>${c.name}</strong> <em>${new Date(c.date).toLocaleDateString()}</em></p>
-              <p>${c.message}</p>
-            </div>
-          `).join('')}
-        </div>
-        <form id="comment-form">
-          <h4>Leave a Comment</h4>
-          <input type="text" id="comment-name" placeholder="Your name" required />
-          <textarea id="comment-message" placeholder="Your comment" required></textarea>
-          <button type="submit">Post Comment</button>
-        </form>
-      `;
-      document.getElementById("blog-posts").appendChild(commentSection);
-
-      const form = document.getElementById("comment-form");
-      form.addEventListener("submit", async (e) => {
-        e.preventDefault();
-        const name = document.getElementById("comment-name").value.trim();
-        const message = document.getElementById("comment-message").value.trim();
-
-        // ✅ Debug log
-        console.log("Submitting comment:", { name, message, postId });
-
-        if (!name || !message) return;
-
-        try {
-          const response = await fetch("/.netlify/functions/post-comment", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ name, message, postId })
+    } else {
+      // 📚 Load list of all blog posts
+      container.innerHTML = `<p style="color:#ccc;">Loading posts...</p>`;
+      fetch('/.netlify/functions/get-posts')
+        .then(res => res.json())
+        .then(posts => {
+          container.innerHTML = "";
+          posts.forEach(post => {
+            const html = `
+              <article class="blog-post" role="article">
+                <h3>${post.title || post.question}</h3>
+                <p class="date">${new Date(post.date).toDateString()}</p>
+                <p class="excerpt">${(post.content || post.answer).slice(0, 100)}...</p>
+                <a href="index.html?id=${post._id}" class="read-more">Read more</a>
+              </article>
+            `;
+            container.insertAdjacentHTML("beforeend", html);
           });
+        })
+        .catch(error => {
+          console.error("Error loading posts:", error);
+          container.innerHTML = `<p style="color:red;">Unable to load posts.</p>`;
+        });
+    }
 
-          const result = await response.json();
+    // 💬 Load Comments + Handle Comment Form Submission
+    function loadComments(postId) {
+      fetch(`/.netlify/functions/get-comments?postId=${postId}`)
+        .then(res => res.json())
+        .then(comments => {
+          const commentSection = document.createElement('section');
+          commentSection.innerHTML = `
+            <h3>Comments</h3>
+            <div id="comments-list">
+              ${comments.map(c => `
+                <div class="comment">
+                  <p><strong>${c.name}</strong> <em>${new Date(c.date).toLocaleDateString()}</em></p>
+                  <p>${c.message}</p>
+                </div>
+              `).join('')}
+            </div>
+            <form id="comment-form">
+              <h4>Leave a Comment</h4>
+              <input type="text" id="comment-name" placeholder="Your name" required />
+              <textarea id="comment-message" placeholder="Your comment" required></textarea>
+              <button type="submit">Post Comment</button>
+            </form>
+          `;
+          document.getElementById("blog-posts").appendChild(commentSection);
 
-          if (response.ok) {
-            alert("Comment submitted!");
-            location.reload();
-          } else {
-            console.error("Server error:", result.error);
-            alert(`Failed to post comment:\n${result.error}`);
-          }
-        } catch (err) {
-          console.error("Comment error:", err);
-          alert(`❌ Error: ${err.message}`);
-        }
-      });
-    })
-    .catch(err => {
-      console.error("Comment fetch error:", err);
-      const errorEl = document.createElement("p");
-      errorEl.style.color = "red";
-      errorEl.textContent = "❌ Unable to load comments.";
-      document.getElementById("blog-posts").appendChild(errorEl);
-    });
-  }
-</script>
+          // 📬 Handle comment submission
+          document.getElementById("comment-form").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const name = document.getElementById("comment-name").value.trim();
+            const message = document.getElementById("comment-message").value.trim();
 
+            if (!name || !message) return;
 
+            try {
+              const response = await fetch("/.netlify/functions/post-comment", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ name, message, postId })
+              });
 
+              const result = await response.json();
 
+              if (response.ok) {
+                alert("Comment submitted!");
+                location.reload(); // 🔁 Refresh to show new comment
+              } else {
+                console.error("Server error:", result.error);
+                alert(`Failed to post comment:\n${result.error}`);
+              }
+            } catch (err) {
+              console.error("Comment error:", err);
+              alert(`❌ Error: ${err.message}`);
+            }
+          });
+        })
+        .catch(err => {
+          console.error("Comment fetch error:", err);
+          const errorEl = document.createElement("p");
+          errorEl.style.color = "red";
+          errorEl.textContent = "❌ Unable to load comments.";
+          document.getElementById("blog-posts").appendChild(errorEl);
+        });
+    }
+  </script>
 </body>
+
 
 </html>
